@@ -12,6 +12,7 @@ namespace Persistence
 
         public DbSet<Value> Values { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<UserActivity> UserActivities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,6 +24,18 @@ namespace Persistence
                     new Value { Id = 2, Name = "Value 2" },
                     new Value { Id = 3, Name = "Value 3" }
                 );
+
+            builder.Entity<UserActivity>(builder => builder.HasKey(ua => new { ua.AppUserId, ua.ActivityId }));
+
+            builder.Entity<UserActivity>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(a => a.UserActivities)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<UserActivity>()
+                .HasOne(ua => ua.Activity)
+                .WithMany(a => a.UserActivities)
+                .HasForeignKey(ua => ua.ActivityId);
         }
     }
 }
