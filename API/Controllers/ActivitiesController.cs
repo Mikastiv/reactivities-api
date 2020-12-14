@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Domain;
 using Application.Activities;
 using System;
 using Microsoft.AspNetCore.Authorization;
